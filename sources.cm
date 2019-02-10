@@ -5,5 +5,8 @@ Group is
 
   dumbass-xml-parse.sml
   mecab.sml
+  utf8char.sml
+
+  analysis.sml
 
   main.sml
