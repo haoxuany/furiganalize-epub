@@ -2,13 +2,15 @@ Group is
   $/basis.cm
   $/smlnj-lib.cm
 
-  configure.sml
-  process.sml
+  src/configure.sml
+  src/process.sml
 
-  dumbass-xml-parse.sml
-  mecab.sml
-  utf8char.sml
+  src/dumbass-xml-parse.sml
+  src/mecab.sml
+  src/utf8char.sml
 
-  analysis.sml
+  src/analysis.sml
 
-  main.sml
+  src/main.sml
+
+  njbuild.sml

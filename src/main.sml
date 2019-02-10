@@ -96,7 +96,7 @@ functor Main(
 
   type arg = { files : string list, make_backup : bool }
 
-  fun run args =
+  fun run name args =
     let
       open GetOpt
 
@@ -113,7 +113,7 @@ functor Main(
         [ "Utility to add furigana to content in epub."
         , "Books must be in epub format, with content in UTF8 encoded XHTML."
         , ""
-        , "furiganalize [-d|no-backup] FILE1 FILE2 ..."
+        , name ^ " [-d|no-backup] FILE1 FILE2 ..."
         , ""
         ]
 
