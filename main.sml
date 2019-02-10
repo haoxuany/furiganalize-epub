@@ -9,8 +9,12 @@ structure Main = struct
       val xml = XML.parse s
       val () = TextIO.closeIn instream
 
-      val _ = Analysis.traverse_all mecab xml
-      (* val () = print (XML.to_string xml) *)
+      val xml = Analysis.traverse_all mecab xml
+      val xml = XML.to_string xml
+
+      val outstream = openOut file
+      val () = TextIO.output (outstream, xml)
+      val () = TextIO.closeOut outstream
     in () end
 
   (* dummy run to try things out *)
