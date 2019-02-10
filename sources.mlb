@@ -1,0 +1,17 @@
+$(SML_LIB)/basis/basis.mlb
+$(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+
+src/process.sml
+
+src/mecab.sml
+
+src/configure.sml
+
+src/dumbass-xml-parse.sml
+src/utf8char.sml
+
+src/analysis.sml
+
+src/main.sml
+
+mltonbuild.sml

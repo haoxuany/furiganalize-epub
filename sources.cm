@@ -2,8 +2,8 @@ Group is
   $/basis.cm
   $/smlnj-lib.cm
 
-  src/configure.sml
   src/process.sml
+  src/configure.sml
 
   src/dumbass-xml-parse.sml
   src/mecab.sml
