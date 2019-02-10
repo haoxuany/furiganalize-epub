@@ -1,5 +1,9 @@
 Group is
   $/basis.cm
 
-  dumbass-xml-parse.sml
+  configure.sml
 
+  dumbass-xml-parse.sml
+  mecab.sml
+
+  main.sml
