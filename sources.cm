@@ -2,6 +2,7 @@ Group is
   $/basis.cm
 
   configure.sml
+  process.sml
 
   dumbass-xml-parse.sml
   mecab.sml

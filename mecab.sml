@@ -60,7 +60,8 @@ functor MeCab(
   exception ProcessSpawnFailure of string list
   fun new () : mecab =
     let
-      val mecab = execute (!Configure.mecab_exec, nil)
+      val mecab = execute
+        (Process.find_in_path (!Configure.mecab_exec), nil)
       val () =
         case read mecab of
           SOME msg =>
