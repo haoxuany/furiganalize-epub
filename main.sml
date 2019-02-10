@@ -22,7 +22,7 @@ functor Main(
       val () = TextIO.closeOut outstream
     in () end
 
-  fun run_on_epub mecab file =
+  fun run_on_epub mecab backup file =
     let
       (* Backup first *)
       val {dir = dir, file = f} = OS.Path.splitDirFile file
@@ -34,14 +34,19 @@ functor Main(
       }
       val bkp = OS.Path.joinDirFile {dir = dir, file = f}
 
-      val instream = BinIO.openIn file
-      val outstream = BinIO.openOut bkp
+      val () =
+        if backup then
+          let
+            val instream = BinIO.openIn file
+            val outstream = BinIO.openOut bkp
 
-      val content = BinIO.inputAll instream
-      val () = BinIO.closeIn instream
+            val content = BinIO.inputAll instream
+            val () = BinIO.closeIn instream
 
-      val () = BinIO.output (outstream, content)
-      val () = BinIO.closeOut outstream
+            val () = BinIO.output (outstream, content)
+            val () = BinIO.closeOut outstream
+          in () end
+        else ()
 
       (* Extract *)
       val dirout = OS.Path.concat (dir,
@@ -89,13 +94,54 @@ functor Main(
 
     in () end
 
-  (* dummy run to try things out *)
-  fun drun () =
+  type arg = { files : string list, make_backup : bool }
+
+  fun run args =
     let
+      open GetOpt
+
+      val bkp_opt =
+        { short = "d"
+        , long = ["no-backup"]
+        , desc = NoArg (fn () => true)
+        , help = "If you don't want to make a backup file before processing"
+        }
+      val options = [bkp_opt];
+
+      val header =
+        String.concatWith "\n"
+        [ "Utility to add furigana to content in epub."
+        , "Books must be in epub format, with content in UTF8 encoded XHTML."
+        , ""
+        , "furiganalize [-d|no-backup] FILE1 FILE2 ..."
+        , ""
+        ]
+
+      val usage = usageInfo
+        { header = header
+        , options = options
+        }
+
+      fun fail s =
+        (print s; print "\n\n"; print usage;
+        OS.Process.exit OS.Process.failure)
+
+      val (opt, arg) = getOpt
+        { argOrder = Permute
+        , options = options
+        , errFn = fail
+        } args
+
+      val arg =
+        if List.null arg then
+          fail "Must provide at least one epub file!"
+        else
+          { files = arg, make_backup = not (List.exists (fn b => b) opt) }
+
       val mecab = MeCab.new ()
-      val file = "../../sandbox/test.epub"
-      val () = run_on_epub mecab file
-      (* val () = run_on_file mecab file *)
+
+      val _ =
+        List.map (run_on_epub mecab (#make_backup arg)) (#files arg)
     in () end
 end
 
