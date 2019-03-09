@@ -8,7 +8,9 @@ If you're here, you're probably also looking to cut down the number of pronounci
 
 # Disclaimer
 
-I wrote this in literally less than a day. And that includes writing an ad-hoc xml parser, utf8 conversions, some arbitrary kana/kanji colocation matching and fiddling with unix processes. This means that there are a lot of cases that I didn't/won't handle, since I'm assuming that most sane people who write japanese epub books use a very specific subset of XHTML, and format their ebook content in `<p>` tags like every other sane person. Also I'm not even close to being proficient in japanese, so the ad-hoc kana matching algorithm I wroute could run into kanji colocation issues. Use it with a grain of salt, and when in doubt just look up the pronounciation in the dictionary.
+I wrote this in literally less than a day. And that includes writing an ad-hoc xml parser, utf8 conversions, some arbitrary kana/kanji colocation matching and fiddling with unix processes. This means that there are a lot of cases that I didn't/won't handle, since I'm assuming that most sane people who write japanese epub books use a very specific subset of XHTML, and format their ebook content in `<p>` tags like every other sane person. Also I'm not even close to being proficient in japanese, so the ad-hoc kana matching algorithm I wrote could run into kanji colocation issues.
+
+Also, note that mecab isn't the best at guessing Japanese pronounciation, due to the sheer amount of special cases in the language. One of the most prominent cases is that mecab thinks `そんな風に` is prounounced `そんなかぜに` rather than `そんなふうに`. Use it with a grain of salt, and when in doubt just look up the pronounciation in the dictionary.
 
 # Setup
 
@@ -37,9 +39,9 @@ $ make
 $ sudo make install
 ```
 
-Note that if you're using a Debian based system you may run into odd linking issues due to how it sets `LD_LIBRARY_PATH`. There are many ways to fix that, but basically good is your friend.
+Note that if you're using a Debian based system you may run into odd linking issues due to how it sets `LD_LIBRARY_PATH`. There are many ways to fix that, but basically google is your friend.
 
-Run `mecab`, typing in a full Japanese sentence, press Enter, make sure that it actually works. That will save you a lot of trouble down the road.
+Run `mecab`, type in a full Japanese sentence, press Enter, make sure that it actually works. That will save you a lot of trouble down the road.
 
 ### mlton build (recommended)
 
@@ -52,7 +54,7 @@ The built binary shows up in `bin/furiganalize`.
 
 ### smlnj build (borked?)
 
-(Note: this doesn't work for me for god knows what reason, NJ head fails to load with "incorrect byte order in heap image".
+(Note: this doesn't work for me for god knows what reason, NJ heap fails to load with "incorrect byte order in heap image".
 I'm on v110.79, so maybe newer versions will have better luck.)
 
 ```sh
@@ -77,3 +79,5 @@ Apache License 2.0
 
 # Shitposting?
 Yes?
+
+<img src="screenshot.jpg" width="50%" height="50%">

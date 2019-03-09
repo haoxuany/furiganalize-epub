@@ -12,5 +12,3 @@ Group is
   src/analysis.sml
 
   src/main.sml
-
-  njbuild.sml

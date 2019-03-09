@@ -202,20 +202,40 @@ structure Analysis = struct
             | Tag ({name = "ruby", attr = nil}, elems) =>
                 (case query of
                   nil => (head :: rest, nil)
-                | (key, _) :: qrest =>
+                | _ =>
                     let
                       val s = parse_string (String.concat (flatten elems))
                       (* val () = print "set:\n" *)
                       (* val () = dbg_ustring s *)
                       (* val () = dbg_ustring key *)
-                    in
-                      if List.hd key = List.hd s then
-                        let val (xml, query) = replace rest qrest
-                        in (head :: xml, query) end
-                      else
-                        let val (xml, query) = replace rest query
-                        in (head :: xml, query) end
-                    end)
+
+                      (* haoxuany - there are *all* sorts of things that
+                      * can have tags: kanji, emphasis on certain phrases,
+                      * hiragana not meant to be read as hiragana, etc.
+                      * This becomes a clusterfuck real soon, so the idea
+                      * here is to remove all the queries that look even
+                      * remotely relevant, including partial matches and
+                      * whatnot.
+                      *)
+                      fun relevant_filter s query =
+                        case (s, query) of
+                          (nil, _) => query
+                        | (_, nil) => query
+                        | (sh :: srest, (key, _) :: qrest) =>
+                            (* queries should always begin with kanji,
+                            * so just check sh *)
+                            if not (UTF8Char.is_cjk sh) then
+                              relevant_filter srest query
+                            else
+                              if sh = List.hd key then
+                                relevant_filter srest qrest
+                              else
+                                relevant_filter srest query
+
+                      val (xml, query) = replace rest
+                        (relevant_filter s query)
+
+                    in (head :: xml, query) end)
             | Tag (tag, elems) =>
                 let
                   val (xml, query) = replace elems query
