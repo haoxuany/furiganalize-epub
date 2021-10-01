@@ -77,6 +77,7 @@ functor Main(
         (fn f =>
           case OS.Path.ext f of
             SOME "xhtml" => run_on_file mecab f
+          | SOME "html" => run_on_file mecab f
           | _ => ())
         dirout
 
@@ -111,7 +112,7 @@ functor Main(
       val header =
         String.concatWith "\n"
         [ "Utility to add furigana to content in epub."
-        , "Books must be in epub format, with content in UTF8 encoded XHTML."
+        , "Books must be in epub format, with content in UTF8 encoded HTML or XHTML."
         , ""
         , name ^ " [-d|no-backup] FILE1 FILE2 ..."
         , ""
