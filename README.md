@@ -1,5 +1,7 @@
 # furiganalize-epub
 
+Note: this project is no longer maintained. Please use [FEI](https://github.com/haoxuany/furiganalize_epub_interactive) instead.
+
 > japanese is hard lol -- Aaron
 
 Japanese pronounciation of Kanji is hard. The meaning and writing of Kanji is easy (because I speak Chinese at a native level lol). To save me from looking up the pronounciation of every other word in a Japanese light novel and failing *every* **single** *time* because I have fat thumbs, and the Kindle Paperwhite isn't great at handling lookup selections, I hacked this thing that takes in a epub book, looks up Kanji pronounciations and tries to backpatch furigana onto the existing Kanji text.
